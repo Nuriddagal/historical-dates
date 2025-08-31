@@ -1,10 +1,11 @@
-import { FC, useLayoutEffect, useRef } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import gsap from "gsap";
-import "swiper/css";
+import { FC, useLayoutEffect, useRef } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { FreeMode } from 'swiper/modules';
+import gsap from 'gsap';
+import 'swiper/css';
 
-import { EventSlide } from "./EventSlide.styled";
-import styled from "styled-components";
+import { EventSlide } from './EventSlide.styled';
+import styled from 'styled-components';
 
 type Props = {
   id: number;
@@ -59,11 +60,13 @@ const Slider = styled(Swiper)`
 `;
 export const EventSlider: FC<EventSlideProps> = ({ data, name }) => {
   const boxRef = useRef<HTMLDivElement>(null);
-
+  const prevDataRef = useRef<Props[]>([]);
   useLayoutEffect(() => {
-    if (!boxRef.current) return;
+    const isDataChanged =
+      JSON.stringify(prevDataRef.current) !== JSON.stringify(data);
+    if (!boxRef.current || !isDataChanged) return;
 
-    const header = boxRef.current.querySelectorAll(".name, .devider");
+    const header = boxRef.current.querySelectorAll('.name, .devider');
     gsap.fromTo(
       header,
       { y: 30, opacity: 0 },
@@ -71,13 +74,13 @@ export const EventSlider: FC<EventSlideProps> = ({ data, name }) => {
         y: 0,
         opacity: 1,
         duration: 1,
-        ease: "power2.out",
-        clearProps: "transform, opacity",
+        ease: 'power2.out',
+        clearProps: 'transform, opacity',
       }
     );
 
     const innerEls = Array.from(
-      boxRef.current.querySelectorAll<HTMLElement>(".event-wrap")
+      boxRef.current.querySelectorAll<HTMLElement>('.event-wrap')
     );
     if (innerEls.length > 0) {
       gsap.killTweensOf(innerEls);
@@ -89,11 +92,12 @@ export const EventSlider: FC<EventSlideProps> = ({ data, name }) => {
           y: 0,
           opacity: 1,
           duration: 1,
-          ease: "power2.out",
-          clearProps: "transform, opacity",
+          ease: 'power2.out',
+          clearProps: 'transform, opacity',
         }
       );
     }
+    prevDataRef.current = data;
   }, [data]);
   if (!data.length) return <div>Loading</div>;
   return (
@@ -103,6 +107,8 @@ export const EventSlider: FC<EventSlideProps> = ({ data, name }) => {
         <Devider className="devider"></Devider>
       </StyledDiv>
       <Slider
+        modules={[FreeMode]}
+        freeMode={{ enabled: true, momentum: false, sticky: false }}
         spaceBetween={20}
         breakpoints={{
           320: {
@@ -117,7 +123,7 @@ export const EventSlider: FC<EventSlideProps> = ({ data, name }) => {
         }}
       >
         {data.map((obj) => (
-          <SwiperSlide style={{ marginLeft: "25px" }} key={obj.id}>
+          <SwiperSlide style={{ marginLeft: '25px' }} key={obj.id}>
             <EventSlide
               year={obj.year}
               description={obj.description}
