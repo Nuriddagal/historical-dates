@@ -13,8 +13,8 @@
     "swiper": "^11.2.10"
   },
   "scripts": {
-    "start": "webpack server --mode development --open",
-    "build": "webpack --mode production",
+    "dev": "webpack serve --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js",
     "deploy": "npm run build && gh-pages -d dist",
     "test": "jest"
   },
@@ -27,6 +27,8 @@
     "@types/react-dom": "^19.1.9",
     "css-loader": "^7.1.2",
     "css-minimizer-webpack-plugin": "^7.0.2",
+    "esbuild": "^0.25.9",
+    "esbuild-loader": "^4.3.0",
     "gh-pages": "^6.3.0",
     "html-webpack-plugin": "^5.6.4",
     "style-loader": "^4.0.0",
