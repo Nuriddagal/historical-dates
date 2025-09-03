@@ -7,13 +7,24 @@ module.exports = {
     filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
-    publicPath: '/',
+    publicPath: '/historical-dates/',
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
   },
   module: {
     rules: [
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'esbuild-loader',
+          options: {
+            loader: 'tsx', // поддержка TSX
+            target: 'es2020',
+          },
+        },
+      },
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
