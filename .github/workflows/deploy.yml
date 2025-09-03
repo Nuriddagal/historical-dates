@@ -13,8 +13,6 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    outputs:
-      artifact-name: github-pages-artifact
     steps:
       - uses: actions/checkout@v4
 
@@ -32,7 +30,6 @@ jobs:
       - name: Upload build artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          name: github-pages-artifact
           path: ./dist
 
   deploy:
@@ -41,5 +38,3 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
