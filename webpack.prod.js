@@ -5,7 +5,12 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 module.exports = merge(common, {
   mode: "production",
   devtool: "source-map",
-
+  output: {
+    path: path.resolve(__dirname, "dist"),
+    filename: "[name].[contenthash].js",
+    clean: true,
+    publicPath: "/historical-dates/",
+  },
   optimization: {
     minimize: true,
     minimizer: [
