@@ -1,10 +1,10 @@
-import { FC, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { FC, useEffect, useLayoutEffect, useRef, useState } from "react";
 
-import { SwiperSlide } from 'swiper/react';
-import { Pagination, Navigation } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import { SwiperSlide } from "swiper/react";
+import { Pagination, Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 import {
   StyledWrapper,
   SwiperFraction,
@@ -13,13 +13,13 @@ import {
   StyledDateStart,
   StyledDateEnd,
   StyledDateWrapper,
-} from './ui/StyledSwiper';
-import { CirclePaginationBlock, EventSlider } from './ui';
-import gsap from 'gsap';
-import { styled } from 'styled-components';
-import type { Swiper as SwiperClass } from 'swiper/types';
-import { useCirclePagination } from './hooks/useCirclePagination';
-import { useDateData } from './hooks/useDateData';
+} from "./ui/StyledSwiper";
+import { CirclePaginationBlock, EventSlider } from "./ui";
+import gsap from "gsap";
+import { styled } from "styled-components";
+import type { Swiper as SwiperClass } from "swiper/types";
+import { useCirclePagination } from "./hooks/useCirclePagination";
+import { useDateData } from "./hooks/useDateData";
 
 const TitleWrapper = styled.div`
   position: absolute;
@@ -94,7 +94,7 @@ export const DateSwiper: FC<Props> = ({ sliderId }) => {
       {
         val: to,
         duration: 1,
-        ease: 'power2.out',
+        ease: "power2.out",
         onUpdate: function () {
           setter(Math.round(this.targets()[0].val));
         },
@@ -102,13 +102,18 @@ export const DateSwiper: FC<Props> = ({ sliderId }) => {
     );
   };
 
-  const normalizeTo180 = (angle: number) =>
-    ((((angle + 180) % 360) + 360) % 360) - 180;
+  const handleSlideChange = (swiper: SwiperClass) => {
+    setCurrentSlide(swiper.activeIndex + 1);
+    const current = rangeArr[swiper.activeIndex];
+    setCurrentRange(current.name);
+    animateNumbers(currentStart, current.dateStart, setCurrentStart);
+    animateNumbers(currentEnd, current.dateEnd, setCurrentEnd);
+  };
 
   useEffect(() => {
     const handler = () => setIsDesktop(window.innerWidth >= 1024);
-    window.addEventListener('resize', handler);
-    return () => window.removeEventListener('resize', handler);
+    window.addEventListener("resize", handler);
+    return () => window.removeEventListener("resize", handler);
   }, []);
 
   if (!rangeArr.length || loading) return <p>Loading...</p>;
@@ -116,7 +121,7 @@ export const DateSwiper: FC<Props> = ({ sliderId }) => {
   return (
     <StyledWrapper>
       <TitleWrapper>
-        <Stick></Stick>{' '}
+        <Stick></Stick>{" "}
         <H1>
           Исторические
           <br /> даты
@@ -134,6 +139,9 @@ export const DateSwiper: FC<Props> = ({ sliderId }) => {
           pagRef={paginationRef}
         />
       )}
+      <SwiperBullets
+        className={`custom-bullets-${sliderId} swiper-pagination`}
+      />
 
       <StyledSwiper
         modules={[Pagination, Navigation]}
@@ -147,13 +155,11 @@ export const DateSwiper: FC<Props> = ({ sliderId }) => {
           prevEl: `.custom-prev-${sliderId}`,
           nextEl: `.custom-next-${sliderId}`,
         }}
-        onInit={setupBullets}
-        onSlideChange={(swiper) => {
-          const current = rangeArr[swiper.activeIndex];
-          setCurrentRange(current.name);
-          animateNumbers(currentStart, current.dateStart, setCurrentStart);
-          animateNumbers(currentEnd, current.dateEnd, setCurrentEnd);
+        onInit={(swiper) => {
+          if (isDesktop) setupBullets(swiper);
+          handleSlideChange(swiper);
         }}
+        onSlideChange={handleSlideChange}
         onSwiper={(s) => (swiperRef.current = s)}
       >
         {rangeArr.map((d) => (
@@ -166,9 +172,6 @@ export const DateSwiper: FC<Props> = ({ sliderId }) => {
         name={currentRange}
       />
 
-      <SwiperBullets
-        className={`custom-bullets-${sliderId} swiper-pagination`}
-      />
       <SwiperFraction ref={fractionRef} className="custom-fraction">
         {currentSlide} / {rangeArr.length}
       </SwiperFraction>

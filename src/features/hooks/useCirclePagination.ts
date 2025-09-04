@@ -1,6 +1,6 @@
-import { useCallback, RefObject } from 'react';
-import gsap from 'gsap';
-import type { Swiper as SwiperClass } from 'swiper/types';
+import { useCallback, RefObject } from "react";
+import gsap from "gsap";
+import type { Swiper as SwiperClass } from "swiper/types";
 
 type BulletElement = HTMLElement & { __customClick?: (e: Event) => void };
 
@@ -16,9 +16,10 @@ export const useCirclePagination = (
   const setupBullets = useCallback(
     (swiper: SwiperClass) => {
       const pagEl = paginationRef.current;
+      swiper.on("slideChange", () => setCurrentSlide(swiper.activeIndex + 1));
       if (!pagEl) return;
       const bullets = Array.from(
-        pagEl.querySelectorAll<BulletElement>('.swiper-pagination-bullet')
+        pagEl.querySelectorAll<BulletElement>(".swiper-pagination-bullet")
       );
       if (!bullets.length) return;
 
@@ -28,11 +29,11 @@ export const useCirclePagination = (
 
       // place bullets and add labels once
       bullets.forEach((b, idx) => {
-        b.setAttribute('data-index', `${idx + 1}`);
-        if (!b.querySelector('.bullet-label')) {
-          const label = labels[idx] ?? '';
-          const span = document.createElement('span');
-          span.className = 'bullet-label';
+        b.setAttribute("data-index", `${idx + 1}`);
+        if (!b.querySelector(".bullet-label")) {
+          const label = labels[idx] ?? "";
+          const span = document.createElement("span");
+          span.className = "bullet-label";
           span.textContent = label;
           b.appendChild(span);
         }
@@ -42,13 +43,13 @@ export const useCirclePagination = (
         b.style.left = `${x}px`;
         b.style.top = `${y}px`;
         gsap.set(b, { rotation: 0 });
-        b.style.pointerEvents = 'auto';
-        b.style.cursor = 'pointer';
+        b.style.pointerEvents = "auto";
+        b.style.cursor = "pointer";
       });
 
       const rotation = { val: anchorAngle - step * swiper.activeIndex };
 
-      gsap.set(pagEl, { rotation: rotation.val, transformOrigin: '50% 50%' });
+      gsap.set(pagEl, { rotation: rotation.val, transformOrigin: "50% 50%" });
       bullets.forEach((b) => gsap.set(b, { rotation: -rotation.val }));
 
       const normalizeTo180 = (angle: number) =>
@@ -60,10 +61,10 @@ export const useCirclePagination = (
         gsap.to(pagEl, {
           rotation: rotation.val,
           duration,
-          ease: 'power2.out',
+          ease: "power2.out",
           onUpdate: () => {
             const r =
-              (gsap.getProperty(pagEl, 'rotation') as number) ?? rotation.val;
+              (gsap.getProperty(pagEl, "rotation") as number) ?? rotation.val;
             bullets.forEach((b) => gsap.set(b, { rotation: -r }));
           },
         });
@@ -71,7 +72,7 @@ export const useCirclePagination = (
 
       // attach handlers
       bullets.forEach((b, i) => {
-        if (b.__customClick) b.removeEventListener('click', b.__customClick);
+        if (b.__customClick) b.removeEventListener("click", b.__customClick);
         const handler = (e: Event) => {
           e.stopPropagation();
           if (swiper.animating) return;
@@ -79,34 +80,33 @@ export const useCirclePagination = (
           else swiper.slideTo(i, 600, true);
           rotateToIndex(i, 0.6);
         };
-        b.addEventListener('click', handler);
+        b.addEventListener("click", handler);
         b.__customClick = handler;
       });
 
       const onSlideChange = () => {
         rotateToIndex(swiper.activeIndex);
-        setCurrentSlide(swiper.activeIndex + 1);
         bullets.forEach((b, bi) => {
           if (bi === swiper.activeIndex) {
-            b.classList.add('active-bullet');
-            b.classList.remove('inactive-bullet');
+            b.classList.add("active-bullet");
+            b.classList.remove("inactive-bullet");
           } else {
-            b.classList.remove('active-bullet');
-            b.classList.add('inactive-bullet');
+            b.classList.remove("active-bullet");
+            b.classList.add("inactive-bullet");
           }
         });
       };
 
-      swiper.on('slideChange', onSlideChange);
+      swiper.on("slideChange", onSlideChange);
 
-      swiper.on('destroy', () => {
+      swiper.on("destroy", () => {
         bullets.forEach((b) => {
           if (b.__customClick) {
-            b.removeEventListener('click', b.__customClick);
+            b.removeEventListener("click", b.__customClick);
             delete b.__customClick;
           }
         });
-        swiper.off('slideChange', onSlideChange);
+        swiper.off("slideChange", onSlideChange);
       });
     },
     [paginationRef, labels, setCurrentSlide, ringDiameter, anchorAngle]

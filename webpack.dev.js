@@ -1,21 +1,21 @@
-const { merge } = require('webpack-merge');
-const common = require('./webpack.common.js');
+const { merge } = require("webpack-merge");
+const path = require("path");
+const common = require("./webpack.common.js");
 
 module.exports = merge(common, {
-  mode: 'development',
-  devtool: 'eval-cheap-module-source-map',
+  mode: "development",
+  devtool: "eval-cheap-module-source-map",
   cache: {
-    type: 'filesystem', // кеш между запусками
+    type: "filesystem",
   },
   devServer: {
     port: 3000,
     hot: true,
     open: true,
-    watchFiles: ['src/**/*'],
+    watchFiles: ["src/**/*"],
     historyApiFallback: true,
     static: {
-      directory: path.join(__dirname, 'dist'),
-      publicPath: '/',
+      publicPath: "/",
     },
   },
   optimization: {
