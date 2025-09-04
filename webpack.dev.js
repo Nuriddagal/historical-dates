@@ -15,6 +15,7 @@ module.exports = merge(common, {
     watchFiles: ["src/**/*"],
     historyApiFallback: true,
     static: {
+      directory: path.join(__dirname, "dist"),
       publicPath: "/",
     },
   },

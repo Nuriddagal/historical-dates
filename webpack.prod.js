@@ -1,31 +1,33 @@
-const { merge } = require('webpack-merge');
-const common = require('./webpack.common.js');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const { merge } = require("webpack-merge");
+const common = require("./webpack.common.js");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = merge(common, {
-  mode: 'production',
-  devtool: 'source-map',
-
+  mode: "production",
+  devtool: "source-map",
+  output: {
+    publicPath: "/historical-dates/",
+  },
   optimization: {
     minimize: true,
     minimizer: [
-      '...',
+      "...",
       new CssMinimizerPlugin({
         minimizerOptions: {
-          preset: ['default', { discardComments: { removeAll: true } }],
+          preset: ["default", { discardComments: { removeAll: true } }],
         },
       }),
     ],
     splitChunks: {
-      chunks: 'all',
+      chunks: "all",
       maxInitialRequests: Infinity,
       minSize: 20000,
     },
-    runtimeChunk: 'single',
+    runtimeChunk: "single",
   },
 
   performance: {
-    hints: 'warning',
+    hints: "warning",
     maxAssetSize: 500000,
     maxEntrypointSize: 500000,
   },
