@@ -8,7 +8,7 @@ module.exports = {
     filename: "[name].[contenthash].js",
     path: path.resolve(__dirname, "dist"),
     clean: true,
-    publicPath: isProd ? "/historical-dates/" : "/",
+    publicPath: "/historical-dates/",
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
@@ -39,7 +39,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "./src/index.html",
-      publicPath: isProd ? "/historical-dates/" : "/",
+      publicPath: "/historical-dates/",
     }),
   ],
 };
