@@ -18,7 +18,7 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  html, body {
+  html, body, #root {
     height: 100%;
     font-family: var(--primary-font);
     -webkit-font-smoothing: antialiased;

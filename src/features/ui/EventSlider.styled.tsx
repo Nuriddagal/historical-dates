@@ -1,11 +1,11 @@
-import { FC, useLayoutEffect, useRef } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode, Navigation } from 'swiper/modules';
-import gsap from 'gsap';
-import 'swiper/css';
+import { FC, useLayoutEffect, useRef } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { FreeMode, Navigation } from "swiper/modules";
+import gsap from "gsap";
+import "swiper/css";
 
-import { EventSlide } from './EventSlide.styled';
-import styled from 'styled-components';
+import { EventSlide } from "./EventSlide.styled";
+import styled from "styled-components";
 
 type Props = {
   id: number;
@@ -20,7 +20,7 @@ type EventSlideProps = {
 const Wrapper = styled.div`
   width: 100%;
   position: absolute;
-  top: 50%;
+  top: 45%;
   z-index: 20;
   @media (min-width: 1024px) {
     top: auto;
@@ -49,7 +49,7 @@ const Wrapper = styled.div`
   }
   .event-prev::after,
   .event-next::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 10px;
     left: 30%;
@@ -118,7 +118,7 @@ const EventSlider: FC<EventSlideProps> = ({ data, name }) => {
       JSON.stringify(prevDataRef.current) !== JSON.stringify(data);
     if (!boxRef.current || !isDataChanged) return;
 
-    const header = boxRef.current.querySelectorAll('.name, .devider');
+    const header = boxRef.current.querySelectorAll(".name, .devider");
     gsap.fromTo(
       header,
       { y: 30, opacity: 0 },
@@ -126,13 +126,13 @@ const EventSlider: FC<EventSlideProps> = ({ data, name }) => {
         y: 0,
         opacity: 1,
         duration: 1,
-        ease: 'power2.out',
-        clearProps: 'transform, opacity',
+        ease: "power2.out",
+        clearProps: "transform, opacity",
       }
     );
 
     const innerEls = Array.from(
-      boxRef.current.querySelectorAll<HTMLElement>('.event-wrap')
+      boxRef.current.querySelectorAll<HTMLElement>(".event-wrap")
     );
     if (innerEls.length > 0) {
       gsap.killTweensOf(innerEls);
@@ -144,8 +144,8 @@ const EventSlider: FC<EventSlideProps> = ({ data, name }) => {
           y: 0,
           opacity: 1,
           duration: 1,
-          ease: 'power2.out',
-          clearProps: 'transform, opacity',
+          ease: "power2.out",
+          clearProps: "transform, opacity",
         }
       );
     }
@@ -164,8 +164,8 @@ const EventSlider: FC<EventSlideProps> = ({ data, name }) => {
         spaceBetween={20}
         navigation={{
           enabled: true,
-          prevEl: '.event-prev',
-          nextEl: '.event-next',
+          prevEl: ".event-prev",
+          nextEl: ".event-next",
         }}
         slidesOffsetBefore={25}
         slidesOffsetAfter={25}

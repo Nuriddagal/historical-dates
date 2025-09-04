@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { Swiper } from 'swiper/react';
+import styled from "styled-components";
+import { Swiper } from "swiper/react";
 
 export const StyledWrapper = styled.div`
   --nav-size: 32px;
@@ -12,14 +12,14 @@ export const StyledWrapper = styled.div`
   --divider-color: #42567a50;
 
   width: 100%;
-  height: 100vh;
+  height: 95vh;
   position: relative;
   margin: auto;
 
   .custom-prev,
   .custom-next,
-  [class*='custom-prev-'],
-  [class*='custom-next-'] {
+  [class*="custom-prev-"],
+  [class*="custom-next-"] {
     position: absolute;
     z-index: 11;
     color: var(--nav-color);
@@ -51,7 +51,7 @@ export const StyledWrapper = styled.div`
     border-left: 1px solid var(--divider-color);
 
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       width: 1px;
       height: 100%;
@@ -61,7 +61,7 @@ export const StyledWrapper = styled.div`
       background-color: var(--divider-color);
     }
     &::before {
-      content: '';
+      content: "";
       position: absolute;
       width: 100%;
       height: 1px;
@@ -72,21 +72,21 @@ export const StyledWrapper = styled.div`
 
     .custom-prev,
     .custom-next,
-    [class*='custom-prev-'],
-    [class*='custom-next-'] {
+    [class*="custom-prev-"],
+    [class*="custom-next-"] {
       bottom: var(--nav-bottom-desktop);
     }
   }
 
   .custom-next,
-  [class*='custom-next-'] {
+  [class*="custom-next-"] {
     left: 52px;
     @media (min-width: 1024px) {
       left: 77px;
     }
   }
   .custom-prev,
-  [class*='custom-prev-'] {
+  [class*="custom-prev-"] {
     left: 10px;
     @media (min-width: 1024px) {
       left: 25px;
@@ -95,17 +95,17 @@ export const StyledWrapper = styled.div`
 
   .custom-next.swiper-button-disabled,
   .custom-prev.swiper-button-disabled,
-  [class*='custom-next-'].swiper-button-disabled,
-  [class*='custom-prev-'].swiper-button-disabled {
+  [class*="custom-next-"].swiper-button-disabled,
+  [class*="custom-prev-"].swiper-button-disabled {
     opacity: 0.5;
     pointer-events: none;
   }
 
   .custom-prev::after,
   .custom-next::after,
-  [class*='custom-prev-']::after,
-  [class*='custom-next-']::after {
-    content: '';
+  [class*="custom-prev-"]::after,
+  [class*="custom-next-"]::after {
+    content: "";
     position: absolute;
     left: 50%;
     top: 50%;
@@ -117,14 +117,14 @@ export const StyledWrapper = styled.div`
     pointer-events: none;
   }
   .custom-prev::after,
-  [class*='custom-prev-']::after {
+  [class*="custom-prev-"]::after {
     transform: translate(-50%, -50%) rotate(-135deg);
   }
 
   .custom-prev:hover,
   .custom-next:hover,
-  [class*='custom-prev-']:hover,
-  [class*='custom-next-']:hover {
+  [class*="custom-prev-"]:hover,
+  [class*="custom-next-"]:hover {
     background-color: var(--nav-bg-hover);
     color: var(--nav-color-hover);
   }
