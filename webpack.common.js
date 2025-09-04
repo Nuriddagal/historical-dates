@@ -7,8 +7,7 @@ module.exports = {
     filename: "[name].[contenthash].js",
     path: path.resolve(__dirname, "dist"),
     clean: true,
-    publicPath:
-      process.env.NODE_ENV === "production" ? "/historical-dates/" : "/",
+    publicPath: "/historical-dates/",
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
