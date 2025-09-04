@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const isProd = process.env.NODE_ENV === "production";
 
 module.exports = {
   entry: "./src/index.tsx",
@@ -7,6 +8,7 @@ module.exports = {
     filename: "[name].[contenthash].js",
     path: path.resolve(__dirname, "dist"),
     clean: true,
+    publicPath: isProd ? "/historical-dates/" : "/",
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
@@ -37,8 +39,6 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "./src/index.html",
-      publicPath:
-        process.env.NODE_ENV === "production" ? "/historical-dates/" : "/",
     }),
   ],
 };
